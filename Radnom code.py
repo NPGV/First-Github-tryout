@@ -1,24 +1,30 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import math
 
 s = 3.814       # km of swimming in Triathlon
 b = 180.2       # km of biking in Triathlon
 r = 41.9        # km of running in Triathlon
 td = s + b + r  # total distance covered
 
-speed_s = 3.5   # min / 100m
-speed_b = 32.5    # km / h
-speed_r = 5.6   # min / km
+speed_s = 1.5   # min / 100m
+speed_b = 40    # km / h
+speed_r = 4.1   # min / km
 
-def hm(hours_float: float) -> tuple[int, int]:
-    """Return (hours, minutes) rounded to the nearest minute."""
+def hm(hours_float: float) -> tuple[int, int, int]:
+    """Return (hours, minutes, seconds) rounded to the nearest minute."""
     h = int(hours_float)
-    m = int(round((hours_float - h) * 60))
+    m_float = (hours_float - h) * 60
+    m = int(math.floor(m_float))
+    s = int(math.ceil((m_float - m) * 60))
     # put 60-minute roll-overs back into the hours part
+    if s == 60:
+        m += 1
+        s = 0
     if m == 60:
         h += 1
         m = 0
-    return h, m
+    return h, m, s
 
 time_s = s * 10 * speed_s /60       # Time swimming minutes
 time_b = (b / speed_b)     # Time biking minutes
@@ -32,10 +38,10 @@ t_min  = np.cumsum([0, time_s, time_b, time_r])           # [0, T_swim, T_swim+T
 t_h = t_min 
 d_km   = np.cumsum([0, s, b, td])        # [0, D_swim, D_swim+Bike, total]
 
-print(f"Swim:  {hm(time_s)[0]} h {hm(time_s)[1]:02d} min")
-print(f"Bike:  {hm(time_b)[0]} h {hm(time_b)[1]:02d} min")
-print(f"Run:   {hm(time_r)[0]} h {hm(time_r)[1]:02d} min")
-print(f"TOTAL: {hm(Total_T)[0]} h {hm(Total_T)[1]:02d} min")
+print(f"Swim:  {hm(time_s)[0]} h {hm(time_s)[1]:02d} min {hm(time_s)[2]:02d} s")
+print(f"Bike:  {hm(time_b)[0]} h {hm(time_b)[1]:02d} min {hm(time_b)[2]:02d} s")
+print(f"Run:   {hm(time_r)[0]} h {hm(time_r)[1]:02d} min {hm(time_r)[2]:02d} s")
+print(f"TOTAL: {hm(Total_T)[0]} h {hm(Total_T)[1]:02d} min {hm(Total_T)[2]:02d} s")
 
 # — Plot
 plt.figure(figsize=(10, 5))
