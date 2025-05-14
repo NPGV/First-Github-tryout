@@ -6,7 +6,7 @@ b = 180.2       # km of biking in Triathlon
 r = 41.9        # km of running in Triathlon
 td = s + b + r  # total distance covered
 
-speed_s = 2.5   # min / 100m
+speed_s = 3   # min / 100m
 speed_b = 32.5    # km / h
 speed_r = 5.6   # min / km
 
