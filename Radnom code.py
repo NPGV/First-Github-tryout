@@ -30,7 +30,7 @@ Total_T_h = Total_T / 60            # Total IronMan time in hours
 # — Cumulative arrays
 t_min  = np.cumsum([0, time_s, time_b, time_r])           # [0, T_swim, T_swim+T_bike, total]
 t_h = t_min 
-d_km   = np.cumsum([0, s, b, td])        # [0, D_swim, D_swim+Bike, total]
+d_km   = np.cumsum([0, s, b, r])        # [0, D_swim, D_swim+Bike, total]
 
 print(f"Swim:  {hm(time_s)[0]} h {hm(time_s)[1]:02d} min")
 print(f"Bike:  {hm(time_b)[0]} h {hm(time_b)[1]:02d} min")
